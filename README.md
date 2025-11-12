@@ -21,6 +21,10 @@ Dissolved oxygen is a critical indicator of ocean health, but traditional measur
 │   ├── 4. Model Development, Optimisation, and Interpretation.ipynb
 │   └── 5. Final Evaluation.ipynb
 ├── Data/
+│   ├── Data Splits/
+│       ├── Unprocessed/
+│       └── Processed/
+│   ├── MODIS/
 │   ├── README.md (data access instructions)
 │   └── NOAA WOD Dataset Acquisition.pdf  
 └── Results/
