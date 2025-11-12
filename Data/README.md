@@ -6,22 +6,20 @@ This directory contains data files and instructions for accessing the datasets u
 
 ```
 Data/
-├── README.md (this file)
-├── NOAA WOD Dataset Acquisition.pdf (step-by-step download guide)
+├── README.md
+├── NOAA WOD Dataset Acquisition.pdf
 ├── Data Splits/
 │   ├── Unprocessed/
-│   │   ├── Training Set.csv
-│   │   ├── Validation Set.csv
-│   │   └── Testing Set.csv
 │   └── Processed/
-│       ├── Training Set.csv
-│       ├── Validation Set.csv
-│       └── Testing Set.csv
 └── MODIS/
-    └── (batch-processed satellite data: subset_045000_050000.csv, etc.)
 ```
 
-**Note:** The `Data Splits/` and `MODIS/` folders are created automatically by the notebooks when processing data. You do not need to create these manually.
+### Folder Descriptions:
+**Unprocessed/:** Contains the raw combined ocean-satellite data after temporal splitting but before feature engineering. Created by Notebook 1.
+**Processed/:** Contains data with engineered features ready for model training. Created by Notebook 2.
+**MODIS/:** Stores intermediate batch files of satellite data extractions from Google Earth Engine. Created by Notebook 1.
+
+**Note:** The `Data Splits/` and `MODIS/` folders must be created manually before running the notebooks. The notebooks will automatically populate these folders with processed data files.
 
 ---
 
@@ -30,18 +28,16 @@ Data/
 This project uses two primary data sources:
 
 ### 1. NOAA World Ocean Database (WOD)
-In-situ ocean measurements including dissolved oxygen, temperature, salinity, and geographic/temporal metadata.
+In-situ ocean measurements including dissolved oxygen and geographic/temporal metadata.
 
 ### 2. MODIS-Aqua Satellite Data
-Remote sensing ocean color and thermal measurements including chlorophyll-a, particulate organic carbon, sea surface temperature, and spectral reflectance.
+Remote sensing ocean color and thermal measurements including chlorophyll-a, particulate organic carbon, sea surface temperature, spectral reflectance and geographic/temporal metadata.
 
 ---
 
 ## Data Access Instructions
 
-### Option 1: Download Original Data Sources (Recommended)
-
-#### NOAA World Ocean Database (WOD)
+### Download NOAA World Ocean Database (WOD) from Portal
 
 **Quick Start:**  
 A detailed step-by-step guide with screenshots is provided in `NOAA WOD Dataset Acquisition.pdf` in this directory.
@@ -81,7 +77,7 @@ A detailed step-by-step guide with screenshots is provided in `NOAA WOD Dataset 
 
 ---
 
-#### MODIS-Aqua Satellite Data
+### Extract Corresponding MODIS-Aqua Satellite Data
 
 MODIS-Aqua data is extracted programmatically using Google Earth Engine in Notebook 1. **No manual download is required.**
 
@@ -105,23 +101,6 @@ Notebook 1 extracts MODIS data in batches to avoid memory issues and API limits.
 
 ---
 
-### Option 2: Request Processed Datasets
-
-For access to pre-processed combined datasets, contact the project team:
-
-**Team Contacts:**
-- nsoldin@umich.edu
-- mansfire@umich.edu  
-- sdharsha@umich.edu
-
-**Available Files:**
-- Combined ocean-satellite dataset: `combined_dataset.csv` (~500 MB)
-- Pre-split training/validation/test sets
-
-**Note:** Processed datasets may be subject to data sharing agreements. Please specify intended use when requesting access.
-
----
-
 ## Data Usage and Licensing
 
 ### NOAA World Ocean Database
@@ -132,7 +111,7 @@ For access to pre-processed combined datasets, contact the project team:
 
 ### MODIS-Aqua Data
 - **License:** Public domain (NASA Earth Science Data Policy)
-- **Citation:** NASA Goddard Space Flight Center, Ocean Ecology Laboratory, Ocean Biology Processing Group. Moderate-resolution Imaging Spectroradiometer (MODIS) Aqua Ocean Color Data. NASA OB.DAAC, Greenbelt, MD, USA. https://doi.org/10.5067/AQUA/MODIS/L3M/CHL/2018
+- **Citation:** NASA Goddard Space Flight Center, Ocean Ecology Laboratory, Ocean Biology Processing Group. Moderate-resolution Imaging Spectroradiometer (MODIS) Aqua Ocean Color Data. NASA OB.DAAC, Greenbelt, MD, USA. Accessed via Google Earth Engine.
 - **Usage:** Free to use and redistribute without restriction
 - **Acknowledgment:** NASA requests acknowledgment of OB.DAAC in publications
 
@@ -143,14 +122,14 @@ For access to pre-processed combined datasets, contact the project team:
 ## File Size Reference
 
 ### Raw Data:
-- NOAA WOD CSV (1990-2023): ~160 MB
-- MODIS batch files (multiple subset_*.csv files): ~100-200 MB total
+- NOAA WOD CSV (1990-2023): ~490 MB
+- MODIS batch files (multiple subset_*.csv files): ~400-900 KB each
 
 ### Processed Data:
-- Combined dataset: ~500 MB
-- Training set (70%, 2002-2019): ~350 MB
-- Validation set (15%, 2020-2021): ~75 MB
-- Testing set (15%, 2022-2023): ~75 MB
+- Combined dataset: ~14.1 MB
+- Data Splits/Processed/Training set (70%, 2002-2019): ~13.5 MB
+- Data Splits/Processed/Validation set (15%, 2020-2021): ~3 MB
+- Data Splits/Processed/Testing set (15%, 2022-2023): ~3 MB
 
 ---
 
@@ -184,59 +163,13 @@ For access to pre-processed combined datasets, contact the project team:
 
 ---
 
-## Troubleshooting
-
-### NOAA WOD Download Issues:
-
-**Problem:** Email with download link not received  
-**Solution:** Check spam folder; large requests may take 2-4 hours to process
-
-**Problem:** CSV file appears corrupted or incomplete  
-**Solution:** Re-download from link in email; ensure stable internet connection
-
-**Problem:** WODSelect interface times out  
-**Solution:** Reduce date range or geographic extent; submit multiple smaller requests
-
-### Google Earth Engine Issues:
-
-**Problem:** `earthengine` command not found  
-**Solution:** Ensure earthengine-api is installed: `pip install earthengine-api`
-
-**Problem:** Authentication failure  
-**Solution:** Run `earthengine authenticate` and follow browser prompts
-
-**Problem:** Quota exceeded error  
-**Solution:** Google Earth Engine has usage limits; wait 24 hours or reduce extraction scope
-
-**Problem:** MODIS data extraction slow  
-**Solution:** Expected behavior for large requests; data is extracted in batches and saved as separate CSV files in `MODIS/` folder. Processing ~45,000 measurements may take several hours.
-
----
-
 ## Additional Resources
 
 ### NOAA WOD Documentation:
-- User Manual: https://www.ncei.noaa.gov/sites/default/files/2021-03/WOD-UserManual.pdf
-- Data Format Specifications: https://www.ncei.noaa.gov/products/world-ocean-database
+- User Manual: https://www.ncei.noaa.gov/data/oceans/woa/WOD/DOC/wodreadme.pdf
 - Quality Control Flags: Described in WOD User Manual Section 4
 
 ### MODIS-Aqua Documentation:
-- Algorithm Theoretical Basis Documents: https://oceancolor.gsfc.nasa.gov/resources/atbd/
-- Product User Guide: https://oceancolor.gsfc.nasa.gov/docs/format/
-- Data Processing Levels: https://oceancolor.gsfc.nasa.gov/data/overview/
+- Google Earth Enginer Ocean Color SMI: https://developers.google.com/earth-engine/datasets/catalog/NASA_OCEANDATA_MODIS-Aqua_L3SMI
+- Data Processing Levels: https://www.earthdata.nasa.gov/learn/earth-observation-data-basics/data-processing-levels
 
-### Google Earth Engine:
-- Python API Tutorial: https://developers.google.com/earth-engine/tutorials/community/intro-to-python-api
-- MODIS-Aqua Dataset Catalog: https://developers.google.com/earth-engine/datasets/catalog/NASA_OCEANDATA_MODIS-Aqua_L3SMI
-
----
-
-## Contact
-
-For questions about data access or processing:
-- nsoldin@umich.edu
-- mansfire@umich.edu
-- sdharsha@umich.edu
-
-For questions about NOAA WOD data: ncei.info@noaa.gov  
-For questions about MODIS data: https://oceancolor.gsfc.nasa.gov/forum/
