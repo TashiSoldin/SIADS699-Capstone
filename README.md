@@ -152,9 +152,13 @@ For questions about data access or code usage, please contact nsoldin@umich.edu,
 
 ## Acknowledgments
 This project uses data from NOAA National Centers for Environmental Information and NASA Ocean Biology Processing Group.
+
 **NOAA World Ocean Database:**
+
 Mishonov, A.V., T.P. Boyer, O.K. Baranova, et al. (2024). World Ocean Database 2023. NOAA National Centers for Environmental Information. https://doi.org/10.25921/v92s-y066
+
 **NASA MODIS-Aqua Ocean Color Data:**
+
 NASA Goddard Space Flight Center, Ocean Ecology Laboratory, Ocean Biology Processing Group. Moderate-resolution Imaging Spectroradiometer (MODIS) Aqua Ocean Color Data. NASA OB.DAAC, Greenbelt, MD, USA. https://doi.org/10.5067/AQUA/MODIS/L3M/CHL/2018
 
 We acknowledge NOAA NCEI and NASA OB.DAAC for providing open access to these valuable datasets, and Google Earth Engine for facilitating satellite data access.
