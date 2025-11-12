@@ -2,18 +2,11 @@
 
 **SIADS 699 Capstone Project - Group 13**
 
-This project develops machine learning models to predict surface dissolved oxygen concentrations from MODIS-Aqua satellite ocean color and thermal data, integrated with in-situ measurements from NOAA's World Ocean Database.
+This project develops machine learning models to predict surface dissolved oxygen concentrations from MODIS-Aqua satellite data, integrated with in-situ measurements from NOAA's World Ocean Database.
 
 ## Project Overview
 
 Dissolved oxygen is a critical indicator of ocean health, but traditional measurement methods (ships and buoys) provide limited spatial and temporal coverage. This project demonstrates how satellite remote sensing combined with machine learning can expand ocean oxygen monitoring capabilities.
-
-**Key Features:**
-- Integration of NOAA World Ocean Database (WOD) with MODIS-Aqua satellite data
-- Feature engineering from spectral reflectance, chlorophyll-a, POC, and sea surface temperature
-- Multiple machine learning models (Linear Regression, Random Forest, LightGBM, XGBoost, Neural Networks)
-- Temporal data splitting to prevent data leakage
-- Hyperparameter optimization using TimeSeriesSplit cross-validation
 
 ## Repository Structure
 
@@ -21,44 +14,29 @@ Dissolved oxygen is a critical indicator of ocean health, but traditional measur
 .
 ├── README.md
 ├── requirements.txt
-├── notebooks/
-│   ├── 1_Data_Collection_and_Formatting.ipynb
-│   ├── 2_Data_Integration_and_Feature_Engineering.ipynb
-│   ├── 3_Baseline_Models.ipynb
-│   └── 4_Model_Development_Optimisation_and_Interpretation.ipynb
-├── data/
-│   └── README.md (data access instructions)
-├── results/
-│   ├── figures/
-│   └── model_performance/
-└── src/
-    └── utils.py (helper functions)
+├── Notebooks/
+│   ├── 1. Data Ingestion, Preparation and Splitting.ipynb
+│   ├── 2. Exploratory Data Analysis and Feature Engineering.ipynb
+│   ├── 3. Baseline Models.ipynb
+│   ├── 4. Model Development, Optimisation, and Interpretation.ipynb
+│   └── 5. Final Evaluation.ipynb
+├── Data/
+│   ├── README.md (data access instructions)
+│   └── NOAA WOD Dataset Acquisition.pdf  
+└── Results/
+    ├── figures/
+    └── Final Report
 ```
 
 ## Data Access
+This project uses two primary data sources:
+1. NOAA World Ocean Database (WOD) - In-situ ocean measurements (public domain)
+2. MODIS-Aqua Satellite Data - Ocean color and thermal data via Google Earth Engine (public domain)
 
-### NOAA World Ocean Database (WOD)
-- **Source:** https://www.ncei.noaa.gov/products/world-ocean-database
-- **Access:** Publicly available, downloaded in NetCDF format
-- **Data Used:** Ocean Station Data (OSD) subset, surface measurements (≤10m depth), 2002-2023
-- **License:** Public domain (U.S. Government work)
-
-### MODIS-Aqua Satellite Data
-- **Source:** NASA Ocean Biology Processing Group (OB.DAAC)
-- **Access:** Via Google Earth Engine (https://earthengine.google.com/)
-- **Dataset:** `NASA/OCEANDATA/MODIS-Aqua/L3SMI` (Level-3 Standard Mapped Image, 4km resolution)
-- **Variables Used:** 
-  - Chlorophyll-a concentration (chlor_a)
-  - Particulate organic carbon (poc)
-  - Sea surface temperature (sst)
-  - Remote sensing reflectance (Rrs_412 through Rrs_678, 10 bands)
-- **Temporal Window:** ±3 days from ocean measurement date
-- **License:** Public domain (NASA data policy)
-
+For detailed download instructions, data specifications, and licensing information, see `Data/README.md`
 **Note:** Raw data files are not included in this repository due to size constraints. Users must download data from the sources above or contact the project team for processed datasets.
 
 ## Setup Instructions
-
 ### Prerequisites
 - Python 3.8 or higher
 - Google Earth Engine account (for satellite data extraction)
@@ -68,8 +46,8 @@ Dissolved oxygen is a critical indicator of ocean health, but traditional measur
 
 1. **Clone the repository:**
 ```bash
-git clone https://github.com/yourusername/ocean-oxygen-prediction.git
-cd ocean-oxygen-prediction
+git clone https://github.com/TashiSoldin/SIADS699-Capstone.git
+cd SIADS699-Capstone
 ```
 
 2. **Create a virtual environment (recommended):**
@@ -90,52 +68,49 @@ earthengine authenticate
 
 ## Running the Code
 
-The analysis pipeline consists of four Jupyter notebooks that should be run sequentially:
+The analysis pipeline consists of five Jupyter notebooks that should be run sequentially:
 
-### 1. Data Collection and Formatting
+### 1. Data Ingestion, Preparation and Splitting
 ```bash
-jupyter notebook notebooks/1_Data_Collection_and_Formatting.ipynb
+jupyter notebook Notebooks/1. Data Ingestion, Preparation and Splitting.ipynb
 ```
-**Purpose:** Download and format NOAA WOD ocean data
-**Outputs:** `data/processed/formatted_ocean_data.csv`
+**Purpose:** Ingest and format NOAA WOD ocean data, extract MODIS satellite data, process, merge and split data
+**Outputs:** `Data/Data Splits/Unprocessed/Training Set.csv`, `Data/Data Splits/Unprocessed/Validation Set.csv`, `Data/Data Splits/Unprocessed/Testing Set.csv`
 
-### 2. Data Integration and Feature Engineering
+### 2. Exploratory Data Analysis and Feature Engineering
 ```bash
-jupyter notebook notebooks/2_Data_Integration_and_Feature_Engineering.ipynb
+jupyter notebook Notebooks/2. Exploratory Data Analysis and Feature Engineering.ipynb
 ```
-**Purpose:** Extract MODIS satellite data via Google Earth Engine and merge with ocean measurements
-**Outputs:** 
-- `data/processed/combined_dataset.csv`
-- Training/validation/test splits (70/15/15, temporally ordered)
+**Purpose:** Perform EDA on training dataset and perform feature engineering
+**Outputs:** `Data/Data Splits/Processed/Training Set.csv`, `Data/Data Splits/Processed/Validation Set.csv`, `Data/Data Splits/Processed/Testing Set.csv`
 
 ### 3. Baseline Models
 ```bash
-jupyter notebook notebooks/3_Baseline_Models.ipynb
+jupyter notebook Notebooks/3. Baseline Models.ipynb
 ```
 **Purpose:** Train baseline models with default hyperparameters
 **Outputs:** Baseline performance metrics
 
 ### 4. Model Development and Optimization
 ```bash
-jupyter notebook notebooks/4_Model_Development_Optimisation_and_Interpretation.ipynb
+jupyter notebook Notebooks/4. Model Development, Optimisation, and Interpretation.ipynb
 ```
 **Purpose:** Hyperparameter tuning and model selection
 **Outputs:** 
 - Optimized model performance metrics
 - Feature importance analysis
-- `results/best_model.pkl`
+
+### 5. Final Evaluation
+```bash
+jupyter notebook Notebooks/5. Final Evaluation.ipynb
+```
+**Purpose:** Evaluate best model on held-out test set
+**Outputs:** 
+- Final test set performance metrics
+- Model evaluation visualizations
+- `Results/best_model.pkl`
 
 ## Key Results
-
-| Model | Validation RMSE | Validation R² | Validation MAE |
-|-------|-----------------|---------------|----------------|
-| Linear Regression | 42.28 | 0.542 | 26.04 |
-| Elastic Net | 42.40 | 0.539 | 26.19 |
-| Random Forest | 40.13 | 0.589 | 22.64 |
-| LightGBM | 39.84 | 0.596 | 23.47 |
-| XGBoost | 40.20 | 0.588 | 23.89 |
-| Neural Network | 42.87 | 0.532 | 27.32 |
-
 **Best Model:** LightGBM (Validation R² = 0.596, RMSE = 39.84 µmol/kg)
 
 ## Data Leakage Prevention
@@ -144,18 +119,6 @@ jupyter notebook notebooks/4_Model_Development_Optimisation_and_Interpretation.i
 - **Feature engineering:** Applied after data splitting using training set only
 - **Hyperparameter tuning:** TimeSeriesSplit cross-validation on training data
 - **Test set:** Reserved for final evaluation only (not used during development)
-
-## Code Attribution
-
-- **Satellite data extraction:** Adapted from Google Earth Engine Python API documentation
-  - Source: https://developers.google.com/earth-engine/tutorials/community/intro-to-python-api
-  - License: Apache 2.0
-  
-- **TimeSeriesSplit implementation:** scikit-learn library
-  - Source: https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.TimeSeriesSplit.html
-  - License: BSD 3-Clause
-
-All machine learning model implementations use standard scikit-learn, XGBoost, and LightGBM APIs without modification.
 
 ## Requirements
 
@@ -171,9 +134,9 @@ See `requirements.txt` for complete list. Key dependencies:
 ## Team
 
 **University of Michigan School of Information - SIADS 699 Capstone**
-- Team Member 1
-- Team Member 2
-- Team Member 3
+- Natasha Soldin
+- Ryan Mansfield
+- Dharshana Somasunderam
 
 ## License
 
@@ -181,10 +144,14 @@ This project is licensed under the MIT License - see LICENSE file for details.
 
 ## Contact
 
-For questions about data access or code usage, please open an issue on this repository or contact [your email].
+For questions about data access or code usage, please contact nsoldin@umich.edu, mansfire@umich.edu or sdharsha@umich.edu
 
 ## Acknowledgments
+This project uses data from NOAA National Centers for Environmental Information and NASA Ocean Biology Processing Group.
+**NOAA World Ocean Database:**
+Mishonov, A.V., T.P. Boyer, O.K. Baranova, et al. (2024). World Ocean Database 2023. NOAA National Centers for Environmental Information. https://doi.org/10.25921/v92s-y066
+**NASA MODIS-Aqua Ocean Color Data:**
+NASA Goddard Space Flight Center, Ocean Ecology Laboratory, Ocean Biology Processing Group. Moderate-resolution Imaging Spectroradiometer (MODIS) Aqua Ocean Color Data. NASA OB.DAAC, Greenbelt, MD, USA. https://doi.org/10.5067/AQUA/MODIS/L3M/CHL/2018
 
-- NOAA National Centers for Environmental Information for World Ocean Database
-- NASA Ocean Biology Processing Group for MODIS-Aqua data
-- Google Earth Engine for data access platform
+We acknowledge NOAA NCEI and NASA OB.DAAC for providing open access to these valuable datasets, and Google Earth Engine for facilitating satellite data access.
+We thank the lecturers and instructional team at the University of Michigan for their help and guidance.
