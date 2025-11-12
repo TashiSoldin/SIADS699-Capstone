@@ -1,0 +1,24 @@
+# Core Scientific Computing
+numpy>=1.23.0
+pandas>=1.5.0
+scipy>=1.10.0
+
+# Machine Learning
+scikit-learn>=1.2.0
+xgboost>=1.7.0
+lightgbm>=3.3.0
+
+# Data Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.13.0
+
+# Google Earth Engine
+earthengine-api>=0.1.350
+
+# Progress Bar
+tqdm>=4.65.0
+
+# Jupyter (if running locally)
+jupyter>=1.0.0
+ipykernel>=6.20.0
