@@ -5,6 +5,11 @@ data/external/
 *.nc
 *.hdf
 *.h5
+Data/*.csv
+Data/Data Splits/*.csv
+Data/Data Splits/Unprocessed/*.csv
+Data/Data Splits/Processed/*.csv
+Data/MODIS/*.csv
 
 # Model files
 *.pkl
