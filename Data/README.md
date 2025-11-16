@@ -15,9 +15,9 @@ Data/
 ```
 
 ### Folder Descriptions:
-**Unprocessed/:** Contains the raw combined ocean-satellite data after temporal splitting but before feature engineering. Created by Notebook 1.
-**Processed/:** Contains data with engineered features ready for model training. Created by Notebook 2.
-**MODIS/:** Stores intermediate batch files of satellite data extractions from Google Earth Engine. Created by Notebook 1.
+- **Unprocessed/:** Contains the raw combined ocean-satellite data after temporal splitting but before feature engineering. Created by Notebook 1.
+- **Processed/:** Contains data with engineered features ready for model training. Created by Notebook 2.
+- **MODIS/:** Stores intermediate batch files of satellite data extractions from Google Earth Engine. Created by Notebook 1.
 
 **Note:** The `Data Splits/` and `MODIS/` folders must be created manually before running the notebooks. The notebooks will automatically populate these folders with processed data files.
 
@@ -97,7 +97,7 @@ MODIS-Aqua data is extracted programmatically using Google Earth Engine in Noteb
 - **Spatial Matching:** Nearest pixel to measurement location
 
 **Processing:**  
-Notebook 1 extracts MODIS data in batches to avoid memory issues and API limits. Satellite data for groups of ~5,000 ocean measurements are saved as separate CSV files in the `MODIS/` folder (e.g., `subset_045000_050000.csv`, `subset_050000_055000.csv`). These batch files are then merged with ocean measurements in subsequent processing steps.
+Notebook 1 extracts MODIS data in batches to avoid memory issues and API limits. Satellite data for groups of ~5,000 ocean measurements are saved as separate CSV files in the `MODIS/` folder (e.g., `subset_045000_050000.csv`, `subset_050000_055000.csv`). These batch files are sequentially combined and later merged with ocean measurements.
 
 ---
 
@@ -136,17 +136,17 @@ Notebook 1 extracts MODIS data in batches to avoid memory issues and API limits.
 ## Data Quality and Processing Notes
 
 ### NOAA WOD Data:
-- **Temporal range:** 1990-2023 (filtered to align with MODIS-Aqua availability for 2002-2023 analysis)
+- **Temporal range:** 1990-2023 (later filtered to align with MODIS-Aqua availability - post 2002)
 - **Spatial coverage:** Global ocean, all geographic regions
-- **Depth filter:** Surface measurements only (0-10 meters depth)
-- **Quality control:** WOD quality flags applied (flag values 0-2 accepted)
+- **Depth filter:** Surface measurements only
+- **Quality control:** WOD quality flags applied
 - **Oxygen range:** Filtered to physically realistic values (0-500 µmol/kg)
 - **Missing values:** Records with missing oxygen measurements removed
 
 ### MODIS-Aqua Data:
 - **Temporal range:** July 2002 - December 2023
 - **Spatial resolution:** 4 km (at equator)
-- **Temporal resolution:** Daily L3 composites
+- **Temporal resolution:** Daily L3 composites (1-2 day temporal resolution)
 - **Matching criteria:** ±3 day window, nearest pixel within ~10 km
 - **Cloud masking:** Applied by MODIS L3 processing
 - **Missing data:** Occurs due to cloud cover, sun glint, or sensor issues
@@ -154,7 +154,7 @@ Notebook 1 extracts MODIS data in batches to avoid memory issues and API limits.
 
 ### Data Integration:
 - **Matching method:** Spatiotemporal nearest-neighbor
-- **Records matched:** ~45,000 ocean measurements successfully matched with satellite data
+- **Records matched:** ~50,000 ocean measurements successfully matched with satellite data
 - **Unmatched records:** Discarded (primarily due to cloud cover or temporal gaps)
 - **Temporal splits:** Strictly chronological to prevent data leakage
   - Training: 2002-2019 (70%)
