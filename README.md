@@ -28,7 +28,8 @@ Dissolved oxygen is a critical indicator of ocean health, but traditional measur
 │   ├── README.md (data access instructions)
 │   └── NOAA WOD Dataset Acquisition.pdf  
 └── Results/
-    ├── figures/
+    ├── Figures/
+    ├── Models/
     └── Final Report
 ```
 
@@ -100,7 +101,7 @@ jupyter notebook Notebooks/3. Baseline Models.ipynb
 jupyter notebook Notebooks/4. Model Development, Optimisation, and Interpretation.ipynb
 ```
 **Purpose:** Hyperparameter tuning and model selection
-**Outputs:** 
+**Outputs:** `Results/Models/best_model.pkl`
 - Optimized model performance metrics
 - Feature importance analysis
 
@@ -112,7 +113,6 @@ jupyter notebook Notebooks/5. Final Evaluation.ipynb
 **Outputs:** 
 - Final test set performance metrics
 - Model evaluation visualizations
-- `Results/best_model.pkl`
 
 ## Key Results
 **Best Model:** LightGBM (Validation R² = 0.596, RMSE = 39.84 µmol/kg)
