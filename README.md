@@ -115,11 +115,11 @@ jupyter notebook Notebooks/5. Final Evaluation.ipynb
 - Model evaluation visualizations
 
 ## Key Results
-**Best Model:** LightGBM (Validation R² = 0.596, RMSE = 39.84 µmol/kg)
+**Best Model:** XGBoost (Validation R² = 0.592)
 
 ## Data Leakage Prevention
 
-- **Temporal splitting:** Training (2002-2019), Validation (2020-2021), Testing (2022-2023)
+- **Temporal splitting:** Training (70%, 2002-2012), Validation (15%, 2012-2015), Testing (15%, 2015-2023)
 - **Feature engineering:** Applied after data splitting using training set only
 - **Hyperparameter tuning:** TimeSeriesSplit cross-validation on training data
 - **Test set:** Reserved for final evaluation only (not used during development)
