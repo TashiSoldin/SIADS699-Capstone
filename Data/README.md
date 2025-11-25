@@ -127,9 +127,9 @@ Notebook 1 extracts MODIS data in batches to avoid memory issues and API limits.
 
 ### Processed Data:
 - Combined dataset: ~14.1 MB
-- Data Splits/Processed/Training set (70%, 2002-2019): ~13.5 MB
-- Data Splits/Processed/Validation set (15%, 2020-2021): ~3 MB
-- Data Splits/Processed/Testing set (15%, 2022-2023): ~3 MB
+- Data Splits/Processed/Training set (70%, 2002-2012): ~13.5 MB
+- Data Splits/Processed/Validation set (15%, 2012-2015): ~3 MB
+- Data Splits/Processed/Testing set (15%, 2015-2023): ~3 MB
 
 ---
 
