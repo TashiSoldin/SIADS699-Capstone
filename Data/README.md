@@ -157,9 +157,6 @@ Notebook 1 extracts MODIS data in batches to avoid memory issues and API limits.
 - **Records matched:** ~50,000 ocean measurements successfully matched with satellite data
 - **Unmatched records:** Discarded (primarily due to cloud cover or temporal gaps)
 - **Temporal splits:** Strictly chronological to prevent data leakage
-  - Training: 2002-2019 (70%)
-  - Validation: 2020-2021 (15%)  
-  - Testing: 2022-2023 (15%)
 
 ---
 
